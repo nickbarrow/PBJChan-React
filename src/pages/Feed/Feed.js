@@ -3,7 +3,7 @@ import Header from '../../components/Header';
 import { auth, db, store } from '../../services/firebase';
 import FileUploader from 'react-firebase-file-uploader';
 import FeedView from './FeedView';
-import Sidebar from '../../components/Sidebar';
+import Nav from '../../components/Nav';
 
 var icon_attribution = [
   {
@@ -67,8 +67,7 @@ export default class Feed extends Component {
 
   componentDidMount() {
     let h = window.innerHeight;
-    // console.log("real window height: ", h);
-    document.getElementById('main').style.height = h + 'px';
+    // document.getElementById('main').style.height = h + 'px';
   }
 
   handleChange(event) {
@@ -197,10 +196,13 @@ export default class Feed extends Component {
 
   render() {
     return (
-      <div id="main" className="main-panel">
-        <Sidebar invokeKitchen={this.invokeKitchen} />
+      <div id="main" className="main-panel"
+        // style={{ height: window.innerHeight }}
+        >
+        {/* Navigation bar/sidebar (desktop) */}
+        <Nav invokeKitchen={this.invokeKitchen} />
 
-        <div id="feed-panel" className="feed-panel page">
+        <div id="feed-panel" className="page feed-panel">
           <Header title={this.state.user?.displayName || 'PBJChan'} />
 
           {/* Post feed */}

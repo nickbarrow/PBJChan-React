@@ -1,6 +1,17 @@
+// Variables ------------------------------
+$headerHeight: 70px;
+$headerBG: #353535;
+$postLeftWidth: 85px;
+$bodyBGColor: #121212;
+$navHeightMobile: 70px;
 // IMPORTS ================================
+// Components -----------------------------
+@import './components/_header.scss';
+@import './components/_footer.scss';
+// Pages ----------------------------------
 @import "./pages/_signup.scss";
 @import "./pages/_login.scss";
+@import "./pages/_profile.scss";
 // Mixins ---------------------------------
 @mixin center { margin: 0 auto; }
 @mixin nomargin { margin: 0; }
@@ -8,15 +19,13 @@
 @mixin nomarginnopadding {
   @include nomargin; @include nopadding;
 }
-// Variables ------------------------------
-$headerHeight: 70px;
-$postLeftWidth: 85px;
 // ========================================
 
 /* GLOBALS ======================= */
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #fbfbfb;
+  background-color: $bodyBGColor;
+  color: white;
   
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-thumb {
@@ -38,14 +47,14 @@ body {
       overflow-y: hidden;
       width: 100%;
       max-width: 600px; // sidebar + panel width
-      height: 100vh;  // fallback
+      // height: 100vh;  // fallback
 
       .page {
         width: 100%;
         max-width: 600px;
         border-left: 1px solid #eee;
         border-right: 1px solid #eee;
-        height: calc(100% - 70px);   // feed-panel need to save space for sidebar
+        // height: calc(100% - 70px);   // feed-panel need to save space for sidebar
       }
     }
   }
@@ -53,10 +62,14 @@ body {
 /* SIDEBAR (MOBILE) ============== */
 .sidebar {
   width: 100%;
-  height: 70px;               // 70px to match header bar
+  height: $navHeightMobile;
   display: flex;
-  border: 1px solid #eee;
-  border-bottom: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #353535;
+  border: none;
+  z-index: 2;
   
   ul {
     width: 100%;
@@ -96,52 +109,26 @@ body {
     }
   }
 }
-/* HEADER ======================== */
-.pbj-header {
-  position: sticky;
-  top: 0;
-
-  .navbar {
-    width: 100%;
-    border-bottom: 1px solid #eee;
-    height: $headerHeight;
-    display: flex;
-    align-items: center;
-  
-    .navbar-title {
-      font-weight: 700;
-      text-decoration: none;
-      font-size: 22px;
-      margin: 0;
-
-      i { margin: 0 30px 0 10px; }
-    }
-  }
-}
-/* FOOTER ======================== */
-footer {
-  .footer__container {
-    text-align: center;
-    padding: 10px 0;
-    p { margin: 0; }
-  }
-}
 /* FEED ========================== */
 .feed-panel {
+  border: 1px solid transparent !important;
 
   .feed {
-    overflow-y: scroll;
-    height: calc(100% - #{$headerHeight});
+    padding: 10px;
+    // height: calc(100% - #{$headerHeight});
+    // overflow-y: scroll;
   
     .post__container {
       width: 100%;
       display: flex;
       flex-direction: row;
-      margin: 0 auto;
+      margin: 0 auto 10px;
       padding: 20px 0 0;
-      border-bottom: 1px solid #eee;
+      // border-bottom: 1px solid #eee;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
       transition: background-color ease .3s;
-      &:hover { background-color: rgba(238, 238, 238, 0.5); }
+      &:hover { background-color: rgba(255, 255, 255, 0.13); }
 
       .post__left {
         width: $postLeftWidth;
@@ -546,143 +533,13 @@ footer {
     }
   }
 }
-/* PROFILE ====================== */
-.profile {
-
-}
-.profile-img__container {
-  margin: 20px auto 30px;
-  border-radius: 50%;
-  position: relative;
-  width: 100px;
-  height: 100px;
-  border: 1px solid #000;
-  background-position: center;
-  background-size: cover;
-
-  .profile-img__input {
-    background-color: transparent;
-    border-radius: 50%;
-    height: 100px;
-    width: 100px;
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    right: 0;
-    bottom: 0;
-    margin: 0;
-    cursor: pointer;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    color: transparent;
-    font-size: 16px;
-    transition: all ease .2s;
-
-    &:hover {
-      color: #fff;
-      text-shadow: 0px 0px 5px black;
-      background-color: rgba(0, 0, 0, 0.4);
-    }
-  }
-}
-
-.profile-info {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  display: block;
-  margin: 20px;
-
-
-  .profile__item {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 45px;
-
-    .profile__item-label {
-      display: flex;
-      align-items: center;
-      width: 35%;
-      height: 100%;
-      border-right: 1px solid #ddd;
-      background-color: #eee;
-      font-size: 16px;
-
-      p {
-        font-weight: bold;
-        padding: 0 5px;
-        margin: 0;
-      }
-    }
-
-    .profile__item-value {
-      width: 65%;
-      position: relative; 
-      padding: 0 5px;
-      font-size: 16px;
-      height: 30px;
-      
-      &:hover {
-        .update-btn {
-          visibility: visible;
-          opacity: 1;
-        }
-      }
-
-      input {
-        border: 1px solid #0000;
-        border-radius: 50px;
-        background-color: #0000;
-        padding: 0 10px;
-        display: block;
-        margin: 0 auto;
-        width: 100%;
-        height: 100%;
-        position: relative;
-        transition: all ease .2s;
-  
-        &:focus {
-          border: 1px solid dodgerblue;
-          background-color: white;
-          padding-right: 75px;
-          outline: none;
-        
-          // Sibling button:
-          // & + .update-btn { visibility: visible; opacity: 1; }
-        }
-      }
-
-      .update-btn {
-        border: none;
-        border-radius: 50px;
-        background-color: dodgerblue;
-        font-size: 14px;
-        color: white;
-        position: absolute;
-        right: 10px;
-        top: 3.5px;
-        visibility: hidden;
-        opacity: 0;
-        transition: opacity ease .5s;
-
-        &:hover {
-          background-color: rgb(28, 132, 236);
-        }
-      }
-    }
-  }
-
-  hr {
-    margin: 0;
-    color: #ddd;
-  }
-}
 
 /* MEDIA QUERIES ================ */
 $endmobile: "min-width: 700px";
 $large: "min-width: 992px";
 $xl: "min-width: 1200px";
+
+$feedWidth: 650px;
 
 // First breakpoint after mobile
 @media ($endmobile) {
@@ -693,7 +550,8 @@ $xl: "min-width: 1200px";
       max-width: 680px;
   
       .sidebar {
-        display: block;
+        // display: block;
+        display: none;
         height: auto;
         width: 80px;
         border: none;
@@ -704,7 +562,7 @@ $xl: "min-width: 1200px";
         }
       }
       
-      .page { height: 100%; }
+      // .page { height: 100%; }
     }
   }
 }

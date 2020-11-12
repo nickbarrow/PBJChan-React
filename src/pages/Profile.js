@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from "../components/Header";
 import { auth, db, store } from "../services/firebase";
 import FileUploader from "react-firebase-file-uploader";
-import Sidebar from "../components/Sidebar";
+import Nav from "../components/Nav";
 
 var noUserPhoto = "https://image.flaticon.com/icons/svg/61/61205.svg";
 
@@ -124,7 +124,7 @@ export default class Chat extends Component {
     render() {
         return (
             <div className="main-panel">
-                <Sidebar />
+                <Nav />
 
                 <div className="profile page">
                     <Header title={this.state.headerText} />
