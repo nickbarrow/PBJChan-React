@@ -1,2 +1,4 @@
 # PBJChan-React
-Created with CodeSandbox
+
+🥳 Good news everyone! PBJChan is back and faster than ever!
+
