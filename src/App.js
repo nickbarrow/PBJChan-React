@@ -57,19 +57,18 @@ class App extends Component {
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route
-            path="/feed"
-            // authenticated={this.state.authenticated}
-            component={Feed}
-          />
+          <Route path="/feed" component={Feed} />
           <Route path="/signup" component={Signup} />
-          <Route path="/login" component={Login} />
-          <Route path="/logout">auth.logout();</Route>
+          <Route path="/login">
+            {this.state.authenticated ? <Redirect to="/feed" /> : <Login />}
+          </Route>
           <PrivateRoute
             path="/profile"
             authenticated={this.state.authenticated}
             component={Profile}
           />
+          {/* Logout and redirect home */}
+          <Route path="/logout" render={() => { auth().signOut(); return <Redirect to="/" /> }}/>
         </Switch>
       </Router>
     );
