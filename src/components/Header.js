@@ -5,7 +5,7 @@ var scroll = Scroll.animateScroll;
 export default function Header(props) {
     return (
         <header className="pbj-header">
-            <nav className="navbar navbar-expand-sm navbar-light bg-light">
+            <nav className="navbar navbar-expand-sm">
                 <p
                     className="navbar-title"
                     onClick={() => {

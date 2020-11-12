@@ -1,25 +1,21 @@
 {
   "name": "pbj-reborn",
   "version": "1.0.0",
-  "description": "",
-  "keywords": [],
+  "description": "A beautiful chan for PBJ-related discussion.",
+  "keywords": ["pbj", "peanut", "butter", "and", "jelly"],
   "main": "src/index.js",
   "dependencies": {
     "@primer/octicons-react": "11.0.0",
     "firebase": "7.17.2",
-    "node-sass": "4.14.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
     "react-firebase-file-uploader": "2.4.3",
-    "react-html-parser": "2.0.2",
     "react-icons": "3.11.0",
     "react-image-lightbox": "5.1.1",
     "react-optimized-image": "0.4.1",
     "react-router-dom": "5.1.2",
     "react-scripts": "3.0.1",
-    "react-scroll": "1.8.1",
-    "react-svg": "11.0.39",
-    "sass": "1.26.10"
+    "react-scroll": "1.8.1"
   },
   "devDependencies": {
     "typescript": "3.3.3"
