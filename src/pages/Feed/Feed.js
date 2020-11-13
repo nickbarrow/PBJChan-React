@@ -4,6 +4,7 @@ import { auth, db, store } from '../../services/firebase';
 import FileUploader from 'react-firebase-file-uploader';
 import FeedView from './FeedView';
 import Nav from '../../components/Nav';
+import Kitchen from './Kitchen';
 
 var icon_attribution = [
   {
@@ -65,11 +66,6 @@ export default class Feed extends Component {
     this.handleUploadSuccess = this.handleUploadSuccess.bind(this);
   }
 
-  componentDidMount() {
-    let h = window.innerHeight;
-    // document.getElementById('main').style.height = h + 'px';
-  }
-
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -96,6 +92,11 @@ export default class Feed extends Component {
     }
 
     // const feedArea = this.myRef.current;
+    this.modClasses('kitchen');
+  }
+
+  afterSubmit = () => {
+    this.setState({ content: '' });
     this.modClasses('kitchen');
   }
 
@@ -196,14 +197,20 @@ export default class Feed extends Component {
 
   render() {
     return (
-      <div id="main" className="main-panel"
-        // style={{ height: window.innerHeight }}
-        >
+      <>
         {/* Navigation bar/sidebar (desktop) */}
-        <Nav invokeKitchen={this.invokeKitchen} />
-
-        <div id="feed-panel" className="page feed-panel">
+        <Nav modClasses={this.modClasses} />
+        <div className="page feed-view">
           <Header title={this.state.user?.displayName || 'PBJChan'} />
+          
+          <div className={`kitchen ${this.state.dynamicElements.includes('kitchen') ? 'active' : ''}`}>
+            <Kitchen
+              user={this.state.user}
+              afterSubmit={this.afterSubmit}
+              replyingTo={this.state.replyingPID}
+              replyingName={this.state.replyingName}
+              />
+          </div>
 
           {/* Post feed */}
           <FeedView
@@ -211,74 +218,8 @@ export default class Feed extends Component {
             modClasses={this.modClasses}
             dynamicElements={this.state.dynamicElements}
           />
-
-          {/* Kitchen */}
-          <div
-            className={`kitchen ${
-              this.state.dynamicElements.includes('kitchen') ? 'active' : ''
-            }`}>
-            {/* Post form. */}
-            <form onSubmit={this.handleSubmit} className="pbj-form">
-              <div className="pbj-controls">
-                <i
-                  className="fas fa-times-circle close-btn"
-                  onClick={() => {
-                    this.modClasses('kitchen');
-                  }}></i>
-                <button type="submit" className="btn btn-primary submit-btn">
-                  Full Send
-                </button>
-              </div>
-
-              {this.state.replyingPID !== '' ? (
-                <h3 className="replying-title">
-                  Replying to {this.state.replyingName}
-                </h3>
-              ) : null}
-
-              <div className="pbj">
-                <textarea
-                  className="form-control"
-                  name="content"
-                  placeholder="What's on your mind..."
-                  onChange={this.handleChange}
-                  value={this.state.content}
-                  required></textarea>
-                <label className="attaching-image">
-                  {this.state.progress === 0 ? (
-                    <span>
-                      <i className="far fa-image"></i> Upload Photo
-                    </span>
-                  ) : (
-                    <div
-                      className={`circle-loader ${
-                        this.state.progress === 100 ? 'load-complete' : ''
-                      }`}>
-                      <div className="checkmark draw"></div>
-                    </div>
-                  )}
-                  <FileUploader
-                    hidden
-                    accept="image/*"
-                    name="profileImg"
-                    randomizeFilename
-                    storageRef={store.ref('images')}
-                    onUploadStart={this.handleUploadStart} // TODO
-                    onUploadError={() => {
-                      this.setState({
-                        isUploading: false
-                      });
-                      console.log('Upload error. Probably pretty fucked, too.');
-                    }}
-                    onUploadSuccess={this.handleUploadSuccess} // TODO
-                    onProgress={this.handleProgress} // TODO
-                  />
-                </label>
-              </div>
-            </form>
-          </div>
         </div>
-      </div>
+      </>
     );
   }
 }

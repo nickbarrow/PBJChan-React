@@ -2,7 +2,13 @@
   "name": "pbj-reborn",
   "version": "1.0.0",
   "description": "A beautiful chan for PBJ-related discussion.",
-  "keywords": ["pbj", "peanut", "butter", "and", "jelly"],
+  "keywords": [
+    "pbj",
+    "peanut",
+    "butter",
+    "and",
+    "jelly"
+  ],
   "main": "src/index.js",
   "dependencies": {
     "@primer/octicons-react": "11.0.0",

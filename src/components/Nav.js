@@ -16,18 +16,6 @@ export default class Nav extends Component {
         };
     }
 
-    // Used to create dynamic elements.
-    modClasses = (class_name) => {
-        var arr = this.state.dynamicElements;
-        // Get index of class in dynamicElements
-        var idx = arr.indexOf(class_name);
-        // If exists in array, remove
-        if (idx >= 0) arr.splice(idx, 1);
-        // Else add to array
-        else arr.push(class_name);
-        this.setState({ dynamicElements: arr });
-    };
-
     render() {
         return (
             <div className="sidebar">
@@ -280,7 +268,7 @@ export default class Nav extends Component {
                             className="sidebar__icon"
                             onClick={() => {
                                 if (window.innerWidth >= 700)
-                                    this.props.invokeKitchen(false);
+                                    this.props.modClasses('kitchen');
                                 else this.props.invokeKitchen(false);
                             }}>
                             {/* Compose SVG */}

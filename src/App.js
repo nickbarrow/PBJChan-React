@@ -60,7 +60,7 @@ class App extends Component {
           {/* Landing page */}
           <Route exact path="/" component={Home} />
           {/* Main post feed */}
-          <Route path="/feed" component={Feed} />
+          <PrivateRoute path="/feed" authenticated={this.state.authenticated} component={Feed} />
           {/* User login/signup/logout */}
           <Route path="/signup" component={Signup} />
           <Route path="/login">
@@ -69,11 +69,7 @@ class App extends Component {
           {/* Logout and redirect home */}
           <Route path="/logout" render={() => { auth().signOut(); return <Redirect to="/" /> }}/>
           {/* User profile page */}
-          <PrivateRoute
-            path="/profile"
-            authenticated={this.state.authenticated}
-            component={Profile}
-          />
+          <PrivateRoute path="/profile" authenticated={this.state.authenticated} component={Profile} />
         </Switch>
       </Router>
     );

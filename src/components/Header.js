@@ -5,15 +5,13 @@ var scroll = Scroll.animateScroll;
 export default function Header(props) {
     return (
         <header className="pbj-header">
-            <nav className="navbar navbar-expand-sm">
-                <p
-                    className="navbar-title"
-                    onClick={() => {
-                        scroll.scrollToTop({ containerId: "feed" });
-                    }}>
-                    {props.title}
-                </p>
-            </nav>
+            <p
+                className="header-title"
+                onClick={() => {
+                    scroll.scrollToTop({ containerId: "feed" });
+                }}>
+                {props.title}
+            </p>
         </header>
     );
 }
