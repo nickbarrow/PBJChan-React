@@ -41,23 +41,39 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div className="container">
-        <form
-          className="mt-5 py-5 px-5"
+      <div className="login">
+        <form className="login-form mt-5 py-5 px-5"
           autoComplete="off"
-          onSubmit={this.handleSubmit}
-        >
-          <h1>
+          onSubmit={this.handleSubmit}>
+          <h1 className="howdy">
             Howdy,
             <Link className="title mx-2" to="#">
               Stranger
             </Link>
             🤠
           </h1>
+          
+          {/* Incorrect user/password */}
+          {this.state.error && 
+            <div>
+              <img
+                className="uwu-img"
+                src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia1.tenor.com%2Fimages%2F143a887b46092bd880997119ecf09681%2Ftenor.gif%3Fitemid%3D15177421&f=1&nofb=1"
+                alt="uwu"
+              />
+              <p className="text-danger">UwU! did youw fowget youwr passwowrd? ∑(✘Д✘๑)</p>
+            </div>
+          }
 
-          <hr />
+          <p className="you-should">you should</p>
+          <button className="btn pbj-btn"
+            type="button"
+            onClick={this.googleSignIn}>
+            Sign in with Google
+          </button>
 
-          <div className="form-group">
+          <p className="you-should">or login w/ email</p>
+          <div className="email-login-form form-group">
             <input
               className="form-control"
               placeholder="Email"
@@ -77,30 +93,12 @@ export default class Login extends Component {
               type="password"
             />
           </div>
+
           <div className="form-group">
-            {this.state.error ? (
-              <div>
-                <img
-                  className="uwu-img"
-                  src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia1.tenor.com%2Fimages%2F143a887b46092bd880997119ecf09681%2Ftenor.gif%3Fitemid%3D15177421&f=1&nofb=1"
-                  alt="uwu"
-                />
-                <p className="text-danger">
-                  UwU! did youw fowget youwr passwowrd? ∑(✘Д✘๑)
-                </p>
-              </div>
-            ) : null}
-            <button className="btn btn-primary px-5" type="submit">
+            <button className="btn pbj-btn-gold" type="submit">
               Login
             </button>
           </div>
-          <button
-            className="btn btn-danger mr-2"
-            type="button"
-            onClick={this.googleSignIn}
-          >
-            Sign in with Google
-          </button>
 
           <hr />
 

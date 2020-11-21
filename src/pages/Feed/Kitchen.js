@@ -16,9 +16,10 @@ export default function Kitchen (props) {
       content: content,
       photo: img,
       timestamp: Date.now(),
-      replyingTo: props.replyingTo,
+      replyingTo: props.replyingPID,
       reactions: []
     });
+    setContent("");
     props.afterSubmit();
   }
 
@@ -37,25 +38,15 @@ export default function Kitchen (props) {
 
   return (
     <form className="pbj-form" onSubmit={(e) => { handleSubmit(e, props); }}>
-      <div className="pbj-controls">
-        <i className="fas fa-times-circle close-btn"
-          onClick={() => {
-            props.modClasses('kitchen');
-          }}></i>
-        <button type="submit" className="btn btn-primary submit-btn">
-          Full Send
-        </button>
-      </div>
-
-      {props.replyingTo !== '' ? (
+      {props.replyingPID ? ( 
         <h3 className="replying-title">
-          Replying to {props.replyingName}
+          Replying to {props.replyingPID}
         </h3>
       ) : null}
 
       <div className="pbj">
         <textarea
-          className="form-control"
+          className="pbj-content"
           name="content"
           placeholder="What's on your mind..."
           onChange={(e) => {
@@ -88,6 +79,18 @@ export default function Kitchen (props) {
             onUploadSuccess={handleSuccess}
           />
         </label>
+      </div>
+
+      <div className="pbj-controls">
+        <button className="btn btn-primary close-btn"
+          onClick={(e) => {
+            e.preventDefault();
+            props.afterSubmit(); }}>
+          Close
+        </button>
+        <button type="submit" className="btn btn-primary submit-btn">
+          Full Send
+        </button>
       </div>
     </form>
   );

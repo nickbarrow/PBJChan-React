@@ -14,15 +14,13 @@ export default class FeedView extends Component {
             user: auth().currentUser,
             posts: [], // Array of fetched PBJs
             page: 1,
-            replying: null,
+            replyingTo: null,
             readError: null, // Error reporting for Firebase actions
             writeError: null, // Error reporting for Firebase actions
             loadingPosts: false,
-            liked: [], // Array of PBJs liked this session.
-            disliked: [],
             /* Necessary to have separate array of just photos as not
                 all posts will have a photo (trying to access every posts
-                photo if it doesnt have one may lead to unexpected resutls) */
+                photo if it doesnt have one may lead to unexpected results) */
             photos: [],
             lightboxOpen: false,
             photoIndex: 0 // Needed for react-image-lightbox
@@ -33,7 +31,7 @@ export default class FeedView extends Component {
 
     // Grabs posts on component mount.
     componentDidMount() {
-        this.posts = db.ref("posts");
+        this.posts = db.ref("posts").orderByChild("timestamp").limitToLast(10);
         this.posts.on("value", (snapshot) => {
             let posts = [],
                 photos = [];
@@ -48,54 +46,10 @@ export default class FeedView extends Component {
                 photos.push(tmpPost.photo);
             });
 
-            posts.reverse();
+            // posts.reverse();
             photos.reverse();
             this.setState({ posts, photos });
         });
-
-        /*
-        try {
-            // Get ALL posts on mount. TODO: not do that
-            db.ref("posts").on("value", (snapshot) => {
-                let posts = [];
-                let photos = [];
-                // Each post...
-                snapshot.forEach((post_snap) => {
-                    var tmp_post = post_snap.val();
-                    tmp_post.pid = post_snap.key; // Create PID using db entry's key.
-                    // Empty reactions for older posts.
-                    if (tmp_post.reactions === undefined)
-                        tmp_post.reactions = [];
-
-                    posts.push(tmp_post); // Push to grand posts array
-                    photos.push(tmp_post.photo); // Push current post photo to photos array for lightbox.
-
-                    let q = `/users/${this.state.user.uid}/`;
-                    // Get user likes.
-                    db.ref(q + "liked/").on("value", (liked_snap) => {
-                        // Set state liked to user's liked posts.
-                        if (liked_snap.val() === null)
-                            this.setState({ liked: [] });
-                        else this.setState({ liked: liked_snap.val() });
-                    });
-                    // Get user dislikes.
-                    db.ref(q + "disliked/").on("value", (disliked_snap) => {
-                        // Set state liked to user's liked posts.
-                        if (disliked_snap.val() === null)
-                            this.setState({ disliked: [] });
-                        else this.setState({ disliked: disliked_snap.val() });
-                    });
-                });
-
-                posts.reverse(); // Posts come in oldest first.
-                photos.reverse();
-                this.setState({ posts, photos, loadingPosts: false });
-            });
-        } catch (error) {
-            // DB probably doesn't exist/no permissions.
-            this.setState({ readError: error.message, loadingPosts: false });
-        }
-        */
     }
 
     // Returns true if a post has replies.
@@ -182,7 +136,16 @@ export default class FeedView extends Component {
 
                 {/* Feed */}
                 {this.state.posts.map((post, idx) => {
-                    return (
+                    let now = Date.now();
+                    let hourMS = 1000 * 60 * 60;
+
+                    // if (post.timestamp < now.getTime()) {
+                    //     console.log("OLD M8");
+                    // }
+                    if (post.replyingTo) {
+                        // console.log(`>${post.replyingTo}<`)
+                        return null;
+                    } else return (
                         <Post
                             post={post}
                             index={idx}
@@ -194,6 +157,7 @@ export default class FeedView extends Component {
                             openLightbox={this.openLightbox}
                             modClasses={this.props.modClasses}
                             dynamicElements={this.props.dynamicElements}
+                            reply={this.props.reply}
                         />
                     );
                 })}

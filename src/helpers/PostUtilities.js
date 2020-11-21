@@ -3,17 +3,23 @@ import React from 'react';
 import { HeartIcon, FlameIcon, TrashcanIcon } from "@primer/octicons-react";
 import { AiOutlineMeh as MehIcon } from "react-icons/ai";
 import { HiTrendingDown as NotStonksIcon } from "react-icons/hi";
+import { FaTractor as TractorIcon } from 'react-icons/fa';
+import { GiAfrica as AfricaIcon } from 'react-icons/gi';
 
 // Reaction Picker functional component;
 var ReactionPicker = (props) => {
   return (
     <div className={`reactions ${props.reactionPickerActive ? "active" : ""}`}>
+      <div onClick={() => { props.react("heart"); }}>
+        <HeartIcon />
+      </div>
+
       <div onClick={() => { props.react("flame"); }}>
         <FlameIcon />
       </div>
 
-      <div onClick={() => { props.react("trash"); }}>
-        <TrashcanIcon />
+      <div onClick={() => { props.react("tractor"); }}>
+        <TractorIcon size={16} />
       </div>
 
       <div style={{ padding: "6px" }}
@@ -21,13 +27,17 @@ var ReactionPicker = (props) => {
         <MehIcon size={20} />
       </div>
 
-      <div onClick={() => { props.react("heart"); }}>
-        <HeartIcon />
-      </div>
-
       <div style={{ padding: "7px" }}
         onClick={() => { props.react("notstonks"); }}>
         <NotStonksIcon size={18} />
+      </div>
+
+      <div onClick={() => { props.react("trash"); }}>
+        <TrashcanIcon />
+      </div>
+
+      <div onClick={() => { props.react("africa"); }}>
+        <AfricaIcon size={16} />
       </div>
     </div>
   );
@@ -37,7 +47,9 @@ var ReactionPicker = (props) => {
 var returnReaction = (reaction) => {
   switch (reaction) {
     case "flame":
-      return <FlameIcon size={16} />;
+      return <FlameIcon
+                // size={16}
+               />;
     case "trash":
       return <TrashcanIcon />;
     case "meh":
@@ -46,6 +58,10 @@ var returnReaction = (reaction) => {
       return <HeartIcon />;
     case "notstonks":
       return <NotStonksIcon />;
+    case "tractor":
+      return <TractorIcon size={16} />;
+    case "africa":
+      return <AfricaIcon size={16} />;
     default:
       break;
   }
@@ -68,6 +84,6 @@ var slimReactions = (reactions) => {
         if (!sl.includes(reaction)) sl.push(reaction);
     });
     return sl;
-};  
+};
 
 module.exports = { ReactionPicker, returnReaction, reactionCount, slimReactions };

@@ -1,11 +1,39 @@
-.text-danger {
-  display: inline;
-  padding: 0 5px;
-}
+// LOGIN PAGE
+.login {
+  a { color: $gold; &:hover { color: $goldHover; } }
 
-.uwu-img {
-  width:  60px;
-  height: 40px;
-  border-radius: 4px;
-  object-fit: cover;
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .howdy {
+      font-size: 30px;
+      word-break: break-word;
+      margin-bottom: 30px;
+    }
+
+    .you-should {
+      font-size: 10px;
+      font-style: italic;
+      color: rgba(238, 238, 238, 0.75);
+      margin: 10px 0 0;
+    }
+
+    .email-login-form {
+      margin: 10px;
+    }
+  
+    .text-danger {
+      display: inline;
+      padding: 0 5px;
+    }
+    
+    .uwu-img {
+      width:  60px;
+      height: 40px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+  }
 }

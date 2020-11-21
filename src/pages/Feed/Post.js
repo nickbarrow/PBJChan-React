@@ -9,8 +9,6 @@ import {
     TiArrowBackOutline as TiReplyIcon,
     TiArrowRepeat
 } from "react-icons/ti";
-// Import IconContext for adding classes.
-import { IconContext } from 'react-icons';
 // Utilities
 import {
     ReactionPicker, returnReaction, slimReactions, reactionCount
@@ -32,11 +30,7 @@ export default class Post extends Component {
         update.reactions = updateReactions;
 
         db.ref(`/posts/${this.props.post.pid}`).update(update);
-        if (
-            this.props.dynamicElements.includes(
-                `reactions-${this.props.post.pid}`
-            )
-        )
+        if (this.props.dynamicElements.includes(`reactions-${this.props.post.pid}`))
             this.props.modClasses(`reactions-${this.props.post.pid}`, 'remove');
     };
 
@@ -45,7 +39,7 @@ export default class Post extends Component {
         var reactions = slimReactions(this.props.post.reactions);
 
         return (
-            <div className="post__container" key={this.props.post.pid}>
+            <div className="post" key={this.props.post.pid}>
                 <div className="post__left">
                     {/* Photo in separate div for desired layout. */}
                     <div className="uploader-image">
@@ -58,23 +52,17 @@ export default class Post extends Component {
                             onClick={() => {
                                 this.props.modClasses(`reactions-${this.props.post.pid}`);
                             }}>
-                            <IconContext.Provider className="reaction-picker-icon">
-                                <SmileyIcon size={20} />
-                            </IconContext.Provider>
+                            <SmileyIcon size={20} />
 
                             <ReactionPicker 
                                 reactionPickerActive={this.props.dynamicElements.includes(`reactions-${this.props.post.pid}`)}
                                 react={this.react} />
                         </div>
-                        {/* 
                         <div
                             className="reply-icon"
-                            onClick={() => {
-                                console.log("reply");
-                            }}>
+                            onClick={() => { this.props.reply(this.props.post.pid); }}>
                             <TiReplyIcon />
                         </div>
-                        */}
                     </div>
                 </div>
 
@@ -100,21 +88,21 @@ export default class Post extends Component {
                             </div>
                         ) : null}
 
-                        <p className="post-text">{this.props.post.content}</p>
+                        <p className={`post-text ${this.props.post.content.includes('>') ? 'green' : ''}`}>{this.props.post.content}</p>
 
                         {/* Post Photo */}
                         {this.props.post.photo ? (
-                            <div className="post-image__container"
+                            <div className="post-image"
                                 style={{ backgroundImage: `URL(${this.props.post.photo})` }}
                                 onClick={() => {this.props.openLightbox(this.props.index); }}
                             ></div>
                         ) : null}
 
                         {/* Reactions container */}
-                        <div className="reaction__icons">
-                            {reactions.map((r) => {
+                        <div className="post-reactions">
+                            {reactions.map((r, idx) => {
                                 return (
-                                    <div onClick={() => { this.react(r); }}>
+                                    <div key={`replyingto${this.props.post.pid}-${idx}`} className="reaction" onClick={() => { this.react(r); }}>
                                         {/* Get reaction icon */}
                                         {returnReaction(r)}
                                         <p className="reaction-count">

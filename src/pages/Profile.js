@@ -123,105 +123,112 @@ export default class Chat extends Component {
 
     render() {
         return (
-            <div className="main-panel">
+            <>
                 <Nav />
 
-                <div className="profile page">
+                <div className="profile">
                     <Header title={this.state.headerText} />
 
-                    <div
-                        className="profile-img__container"
-                        style={{
-                            backgroundImage: `url(${this.state.photoURL})`
+                    <div className="profile-card">
+                        
+                        <div className="profile-img"
+                            style={{
+                                backgroundImage: `url(${this.state.photoURL})`
+                            }}>
+                            {/* <img className="profile-img" src={this.state.photoURL} alt="User" /> */}
+                            <label className="profile-img-input">
+                                Choose Image
+                                <FileUploader
+                                    hidden
+                                    accept="image/*"
+                                    name="profileImg"
+                                    randomizeFilename
+                                    storageRef={store.ref("images")}
+                                    onUploadStart={this.handleUploadStart} // TODO
+                                    onUploadError={this.handleUploadError} // TODO
+                                    onUploadSuccess={this.handleUploadSuccess} // TODO
+                                    onProgress={this.handleProgress} // TODO
+                                />
+                            </label>
+                        </div>
+                        
+                        <div className="profile-info">
+                            <div className="profile__item">
+                                <div className="profile__item-label">
+                                    <p className="d-inline">display name:</p>
+                                </div>
+
+                                <div className="profile__item-value">
+                                    <input
+                                        type="text"
+                                        name="displayName"
+                                        value={this.state.displayName || ""}
+                                        onChange={this.handleChange}
+                                    />
+                                    <button
+                                        className="update-btn"
+                                        onClick={(e) => {
+                                            this.updateUser("displayName");
+                                        }}>
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Update Email. */}
+                            <div className="profile__item">
+                                <div className="profile__item-label">
+                                    <p className="d-inline">email:</p>
+                                </div>
+
+                                <div className="profile__item-value">
+                                    <input
+                                        type="text"
+                                        name="email"
+                                        value={this.state.email}
+                                        onChange={this.handleChange}
+                                    />
+                                    <button
+                                        className="update-btn"
+                                        onClick={(e) => {
+                                            this.updateUser("email");
+                                        }}>
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Update Password. */}
+                            <div className="profile__item">
+                                <div className="profile__item-label">
+                                    <p className="d-inline">password:</p>
+                                </div>
+
+                                <div className="profile__item-value">
+                                    <input
+                                        type="text"
+                                        name="password"
+                                        placeholder="********"
+                                    />
+                                    <button
+                                        className="update-btn"
+                                        onClick={(e) => {
+                                            this.updateUser("password");
+                                        }}>
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button className="btn btn-danger logout-btn"
+                        onClick={() => {
+                            auth().signOut();
                         }}>
-                        {/* <img className="profile-img" src={this.state.photoURL} alt="User" /> */}
-                        <label className="profile-img__input">
-                            Choose Image
-                            <FileUploader
-                                hidden
-                                accept="image/*"
-                                name="profileImg"
-                                randomizeFilename
-                                storageRef={store.ref("images")}
-                                onUploadStart={this.handleUploadStart} // TODO
-                                onUploadError={this.handleUploadError} // TODO
-                                onUploadSuccess={this.handleUploadSuccess} // TODO
-                                onProgress={this.handleProgress} // TODO
-                            />
-                        </label>
-                    </div>
-                    <div className="profile-info">
-                        <div className="profile__item">
-                            <div className="profile__item-label">
-                                <p className="d-inline">display name:</p>
-                            </div>
-
-                            <div className="profile__item-value">
-                                <input
-                                    type="text"
-                                    name="displayName"
-                                    value={this.state.displayName || ""}
-                                    onChange={this.handleChange}
-                                />
-                                <button
-                                    className="update-btn"
-                                    onClick={(e) => {
-                                        this.updateUser("displayName");
-                                    }}>
-                                    Update
-                                </button>
-                            </div>
-                        </div>
-                        <hr />
-
-                        {/* Update Email. */}
-                        <div className="profile__item">
-                            <div className="profile__item-label">
-                                <p className="d-inline">email:</p>
-                            </div>
-
-                            <div className="profile__item-value">
-                                <input
-                                    type="text"
-                                    name="email"
-                                    value={this.state.email}
-                                    onChange={this.handleChange}
-                                />
-                                <button
-                                    className="update-btn"
-                                    onClick={(e) => {
-                                        this.updateUser("email");
-                                    }}>
-                                    Update
-                                </button>
-                            </div>
-                        </div>
-                        <hr />
-
-                        {/* Update Password. */}
-                        <div className="profile__item">
-                            <div className="profile__item-label">
-                                <p className="d-inline">password:</p>
-                            </div>
-
-                            <div className="profile__item-value">
-                                <input
-                                    type="text"
-                                    name="password"
-                                    placeholder="********"
-                                />
-                                <button
-                                    className="update-btn"
-                                    onClick={(e) => {
-                                        this.updateUser("password");
-                                    }}>
-                                    Update
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                        Log Out</button>
                 </div>
-            </div>
+            </>
         );
     }
 }
