@@ -50,11 +50,9 @@ export default class SignUp extends Component {
             </Link>
           </h1>
           <div class="huh">
-            <img
-              class="sb-doncha"
+            <img class="sb-doncha"
               src="https://media2.giphy.com/media/l0MYLePFMI1m69fpu/giphy.gif?cid=ecf05e47t98ivzu41j7f3hx4hyvovy17vhl1ph796arosrtv&rid=giphy.gif"
-              alt="You like PBJs, doncha Squidward?"
-            />
+              alt="You like PBJs, doncha Squidward?" />
             <p className="lead huh__text">So u wanna post pbjs, huh?</p>
           </div>
           <div className="form-group">

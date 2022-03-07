@@ -12,7 +12,7 @@ import {
 // Utilities
 import {
     ReactionPicker, returnReaction, slimReactions, reactionCount
-} from '../../helpers/PostUtilities';
+} from './../../helpers/PostUtilities';
 
 // Img for users with no photo set.
 const noAuthorImg = "https://image.flaticon.com/icons/svg/61/61205.svg";
